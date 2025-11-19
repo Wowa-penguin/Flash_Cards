@@ -1,0 +1,135 @@
+What are the three phases of the UCD Sprint process?;Discovery, Design, Reality Check.
+What is the main goal of the Discovery phase in UCD Sprint?;To understand users, their context, and their needs before designing solutions.
+What is the main goal of the Design phase in UCD Sprint?;To create tasks, flows, and prototypes that address user needs and can be tested with users.
+What is the main goal of the Reality Check phase in UCD Sprint?;To evaluate designs with users, interpret the results, and decide concrete next steps.
+What is the “initial map” in UCD Sprint?;A diagram linking user groups on the left, a long-term goal on the right, and 5–15 steps in between.
+What do arrows in the initial map represent?;The sequence or flow of steps from the starting situation to the long-term user goal.
+Why does UCD Sprint start with mapping instead of jumping straight into design?;To ensure the team has a shared understanding of the problem space and user journeys before designing solutions.
+What kind of information goes on the left side of the initial map?;User groups or actors involved.
+What kind of information goes on the right side of the initial map?;The long-term goal or outcome users want to achieve.
+What is the key deliverable of the Discovery phase?;A clear understanding of user groups, their goals, context, and selected UX goals/targets for design.
+
+What is User Group Analysis used for?;To describe and understand each user group’s context of use across six factors.
+Name the six factors in User Group Analysis.;WHO, WHY, WHAT, WHERE, WHEN, HOW important.
+In User Group Analysis, what does WHO describe?;Background of the group: age, gender, abilities, education, computer skills, number of users.
+In User Group Analysis, what does WHY describe?;The user group’s main reasons and motivations for using the system.
+In User Group Analysis, what does WHAT describe?;The technical equipment the user group will use, such as phone, tablet, or computer.
+In User Group Analysis, what does WHERE describe?;The physical and social environment where the system will be used.
+In User Group Analysis, what does WHEN describe?;How often and how long the group uses the system.
+In User Group Analysis, what does HOW important describe?;How important this user group is to the system’s success (primary/secondary).
+What standard concept is very close to User Group Analysis?;Context of use from ISO 9241-210.
+What does “context of use” mean in ISO 9241-210?;The combination of users, goals, tasks, resources, and environments in which a system is used.
+
+What is the primary purpose of interviews in UCD?;To understand users’ needs, tasks, experiences, and motivations in depth.
+Are interviews mainly about evaluation or understanding?;They are mainly about understanding, not about evaluating a prototype.
+What type of questions are typically asked in user interviews?;Open-ended questions about what users do, how they do it, and why.
+Name the five high-level steps of running an interview.;Introduction, Warm-up, Main session, Cool-off, Closing.
+What is done in the introduction phase of an interview?;Introduce yourself, explain goals, get consent, and explain confidentiality.
+Why is a warm-up phase useful in interviews?;It helps the interviewee relax and feel comfortable before more detailed questions.
+What is the “main session” in an interview?;The part where most important questions about tasks, problems, and needs are asked.
+What is the purpose of the cool-off period in an interview?;To ask easy, non-threatening final questions and reduce any tension.
+What is the purpose of the closing phase in an interview?;To thank the user, answer questions, and clearly end the session.
+Why is it recommended to plan interviews in advance?;To ensure you ask relevant questions and gather comparable data across participants.
+
+What are UX goals?;Statements describing the desired user experience, such as enjoyable, efficient, or trustworthy.
+How are UX goals derived in UCD Sprint?;From insights gained through interviews, user group analysis, and mapping.
+Why are UX goals important for design decisions?;They guide choices about interaction, visual design, and features toward a desired experience.
+Give an example of a UX goal.;“The system should feel simple and not overwhelming for first-time users.”
+In group projects, how many UX goals are typically selected?;Usually around three main UX goals.
+
+In UCD, what is a task?;A goal-oriented instruction for the user that does not specify how to achieve it.
+Give an example of a good task description.;“Find a cycling route from your home to your work tomorrow morning.”
+Why should tasks avoid telling the user exactly what to click?;To let the user choose paths freely, revealing how intuitive the design is.
+What is a happy path?;A visual flow showing each screen and user action for one task when everything goes well.
+What must be shown on a happy path?;All screens, the user’s actions, arrows between screens, and system reactions.
+Why are happy paths created before detailed design?;To clarify and agree on task flow before investing in detailed visuals.
+In happy paths, do we show errors or only successes?;Only successes—no errors are included.
+How are user actions typically marked on a happy path?;With highlights or marks on controls, plus arrows indicating transitions.
+What is the relationship between tasks, happy paths, and prototypes?;Tasks drive happy paths, and happy paths guide prototype screens and links.
+Why is it recommended to work in a team when making happy paths?;To combine perspectives and improve the completeness and clarity of the flow.
+
+What is a low-fidelity prototype?;A rough, simple representation of a system, often on paper or wireframes, focused on structure.
+Why use low-fidelity prototypes?;They are quick and cheap to create and change, good for early feedback.
+What is an intermediate (clickable) design?;A more detailed prototype with colors and styles where some buttons can be clicked to navigate.
+What is a detailed or high-fidelity prototype?;A prototype that closely resembles the final product in look and feel, often with realistic data.
+What is a risk of high-fidelity prototypes?;Users may believe the system is fully implemented when it is not.
+Which type of prototype is most appropriate for think-aloud testing in your course?;Intermediate clickable prototypes and low-fidelity prototypes.
+Why is it useful to test low- or intermediate-fidelity prototypes before implementation?;To find usability issues early when changes are cheaper.
+
+Name the five key design principles taught in this course.;Visibility, Feedback, Constraints, Consistency, Affordance.
+What does Visibility mean in UI design?;Users should be able to see what actions are possible and what state the system is in.
+What does Feedback mean in UI design?;The system should clearly indicate what happened as a result of the user’s action.
+What do Constraints mean in UI design?;The system should restrict possible actions to prevent errors and invalid input.
+What does Consistency mean in UI design?;Similar actions and elements should look and behave in similar ways.
+What does Affordance mean in UI design?;The design should suggest how an element can be used (e.g., buttons look clickable).
+Name three interface widgets suitable for choosing between exactly two options.;Radio buttons, Toggle switch, Two-option segmented control.
+When is it appropriate to use radio buttons?;When the user must select exactly one option from a small visible list.
+When is a toggle switch appropriate?;For binary on/off or enabled/disabled settings.
+Why is it important not to overload users with many different widget types for similar actions?;It can reduce consistency and make the interface harder to learn.
+
+What are the three message types often shown to users?;Information messages, Warnings, and Error messages.
+What is the purpose of an information message?;To inform the user about something that happened, usually with an OK button.
+What is the purpose of a warning message?;To alert the user about a potentially serious action, giving options such as Yes/No/Cancel.
+What is the purpose of an error message?;To inform the user that something went wrong and often offer a way to correct it.
+List three characteristics of a good error message.;Informative, Constructive, Polite.
+Why should error messages avoid technical codes?;Because users often do not understand them and they are not helpful.
+Give an example of a bad error message style.;“Error 11: You are too impatient.”
+Why is politeness important in error messages?;Users should feel supported, not blamed, when something goes wrong.
+
+According to ISO 9241-210, what is the definition of usability?;The extent to which specified users can achieve specified goals with effectiveness, efficiency, and satisfaction in a specified context of use.
+In the ISO definition, what does effectiveness mean?;Accuracy and completeness with which users achieve goals.
+In the ISO definition, what does efficiency mean?;Resources (like time and effort) used in relation to the accuracy and completeness of goals achieved.
+In the ISO definition, what does satisfaction mean?;Users’ comfort and positive attitudes when using the system.
+What does “specified context of use” include?;Users, goals, tasks, resources, and environments.
+What is the difference between usability and user experience (UX)?;Usability is about effectiveness, efficiency, and satisfaction; UX is broader and includes emotions, perceptions, and responses over time.
+What is a common UX measurement method used in the course?;The System Usability Scale (SUS).
+What SUS score is often considered acceptable in the course example?;A SUS score of 68 or higher.
+Which three metrics are commonly measured in usability tests?;Effectiveness, Efficiency, Satisfaction.
+Give an example of a satisfaction data point.;A rating on a questionnaire or a comment like “This was frustrating.”
+
+What is a user story?;A short description of a feature from the user’s perspective using the format “As a <user>, I want <goal>, so that <reason>.”
+Write the standard format of a user story.;As a <user>, I want <goal>, so that <reason>.
+What is a functional requirement?;A description of what the system must do.
+What is a non-functional requirement (NFR)?;A description of how well the system must perform, such as performance, security, or UX levels.
+Give an example of a non-functional requirement related to UX.;“The system shall reach a SUS score of at least 68 with at least 5 test users.”
+What is a use case?;A structured description of how a user interacts with the system to achieve a goal.
+What three elements of a use case do you need for the exam?;Preconditions, Basic flow, Alternative flow.
+What is a precondition in a use case?;A condition that must be true before the use case can start.
+What is the basic flow in a use case?;The main sequence of steps the user and system take when everything goes right.
+What is an alternative flow in a use case?;A sequence of steps that occurs when something deviates from the basic flow, such as invalid data.
+
+What is functional software testing?;Testing that the system’s functions work according to the requirements.
+Define unit testing.;Testing individual components or units in isolation.
+Define integration testing.;Testing interactions between combined components or subsystems.
+Define system testing.;Testing the complete system as a whole.
+Define acceptance testing.;Testing whether the system meets user or customer requirements and is acceptable for use.
+What is boundary value testing?;Testing values at the edges of valid input ranges.
+What is equivalence partitioning?;Dividing input data into groups where each group is expected to behave similarly so one test can represent the whole group.
+
+What is think-aloud testing?;A method where users perform tasks while verbalizing their thoughts, feelings, and expectations.
+What is the main purpose of think-aloud testing?;To reveal usability problems and understand how users perceive the interface while they work.
+Name the Five Acts of a user test session.;Welcome, Background questions, Prototype introduction, Tasks, Debrief.
+What typically happens in the welcome act?;Introduce the session, reassure the user they are not being tested, and set expectations.
+Why are background questions asked before tasks?;To understand the user’s experience and context, which helps interpret their behavior.
+What happens in the prototype introduction act?;You explain that it’s a prototype, not finished, and set expectations about partial functionality.
+How should tasks be described in think-aloud tests?;As realistic goals, not step-by-step instructions.
+What is the purpose of the debrief act?;To capture overall impressions, likes, dislikes, and suggestions after the tasks.
+Name three types of data collected during think-aloud.;Completion (effectiveness), time/effort (efficiency), comments and reactions (satisfaction/UX).
+How are think-aloud results used in UCD Sprint?;To revise designs, fix usability issues, and refine requirements before moving forward.
+
+What is heuristic evaluation?;An expert-based evaluation where evaluators inspect a UI against a set of usability principles.
+Why do expert evaluations complement user testing?;Experts can quickly spot general issues, while user testing reveals real-world problems from actual users.
+In expert evaluation, what is a problem list?;A list of usability issues found, each linked to a principle and given a severity rating.
+What is severity rating used for in expert evaluation?;To prioritize which usability problems to fix first.
+Name a well-known set of heuristics often mentioned in the course.;Nielsen’s 10 usability heuristics.
+
+What are the three main parts of a class in a UML class diagram?;Class name, Attributes, Methods.
+What does the + symbol mean in a class diagram?;+ means public visibility.
+What does the - symbol mean in a class diagram?;- means private visibility.
+Write an example of a correct attribute syntax in UML.;+ email: string
+Write an example of a correct method syntax in UML.;+ login(email: string, password: string): bool
+What do attributes represent in a class?;The properties or data stored in instances of the class.
+What do methods represent in a class?;The behaviors or operations that instances of the class can perform.
+Give an example of a plausible class for a biking-route website.;User, Route, Rating, Comment, Administrator.
+Why is it better to keep sensitive attributes private?;To protect data and enforce constraints through methods rather than direct access.
+Why might you use a public setter method instead of a public attribute?;To validate or restrict values before assigning them to a private attribute.
