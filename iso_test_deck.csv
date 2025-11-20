@@ -1,0 +1,20 @@
+What standard defines human-centred design for interactive systems?;ISO 9241-210.
+What is the ISO definition of usability?;Effectiveness, Efficiency, Satisfaction in a specified context of use.
+What does “effectiveness” mean in ISO 9241-210?;Accuracy and completeness with which users achieve goals.
+What does “efficiency” mean in ISO 9241-210?;Resources (time, effort) used to achieve goals.
+What does “satisfaction” mean in ISO 9241-210?;User comfort and positive attitudes toward using the system.
+What does “context of use” include?;Users, Goals, Tasks, Resources, Environment.
+What is the first human-centred design activity in ISO 9241-210?;Understand and specify the context of use.
+What is the second human-centred design activity?;Specify user requirements.
+What is the third human-centred design activity?;Produce design solutions.
+What is the fourth human-centred design activity?;Evaluate designs against user requirements.
+What is the key point about iteration in ISO 9241-210?;Human-centred design is iterative—repeat until usability goals are met.
+Why must users be involved throughout the design process?;To ensure solutions match real user needs and context.
+What does ISO say about multidisciplinary teams?;Design should involve a team with diverse skills and perspectives.
+What does ISO mean by “address the whole user experience”?;Design must consider emotions, expectations, perceptions—not just tasks.
+How does ISO relate to UCD Sprint?;UCD Sprint compresses the four ISO activities into Discovery, Design, and Reality Check phases.
+How does User Group Analysis fit ISO?;It specifies the context of use (users, tasks, environment).
+How do tasks and happy paths fit ISO?;They are part of producing design solutions that can be evaluated.
+How does think-aloud testing fit ISO?;It is an evaluation activity to check usability and UX.
+What ISO components map directly to usability testing?;Effectiveness, Efficiency, Satisfaction.
+What is the overall purpose of ISO 9241-210?;To guide the creation of systems that are usable, effective, and fit the users' real context.

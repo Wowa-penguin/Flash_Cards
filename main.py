@@ -7,9 +7,9 @@ import os
 class App:
     """Main class"""
 
-    def __init__(self, deck):
+    def __init__(self, questions_deck):
         # Load questions
-        self.data_list = self.get_questions_from_db(deck)
+        self.data_list = self.get_questions_from_db(questions_deck)
         # To display questions
         self.wrong_questions_list = []
         random.shuffle(self.data_list)
@@ -110,7 +110,8 @@ class App:
         question_type = ""
         # If question in data list and wrong list then 7.5% ish chance to get a wrong
         if self.data_list and self.wrong_questions_list:
-            # If the len of questions is smaller than the wrong questions, then more wrong questions come
+            # If the len of questions is smaller than the wrong questions,
+            # then more wrong questions come
             if len(self.data_list) + 5 < len(self.wrong_questions_list):
                 random_question_pull = random.randint(0, 3)
             else:
@@ -198,12 +199,12 @@ if __name__ == "__main__":
     file_list = []
     for count, file in enumerate(os.listdir()):
         if ".csv" in file:
-            print(f"{count}, {file}")
+            print(f"{count}: {file}")
             file_list.append(file)
     user_pick_input = int(input("Pick from number: "))
 
     try:
         deck = file_list[user_pick_input]
-        App(deck=deck).run()
+        App(questions_deck=deck).run()
     except IndexError:
-        print("Not a Valid deck ")
+        print(f"Not a Valid deck nr:{user_pick_input}")
