@@ -1,0 +1,49 @@
+What are the 3 phases of the UCD Sprint?;Discovery, Design, Reality Check.
+What is the purpose of the Discovery phase?;Understand users, context, needs.
+What are the 6 User Group Analysis factors?;WHO, WHY, WHAT, WHERE, WHEN, HOW important.
+What does WHO describe?;Demographics, skills, abilities.
+What does WHY describe?;Motivations and goals.
+What does WHAT describe?;Devices/equipment used.
+What does WHERE describe?;Physical/social environment.
+What does WHEN describe?;Frequency and timing of use.
+What does HOW important mean?;Primary vs secondary user importance.
+What is the ISO definition of usability?;Effectiveness, Efficiency, Satisfaction in a specified context of use.
+What does effectiveness mean?;Task completion accuracy and completeness.
+What does efficiency mean?;Resources used—time, effort, steps.
+What does satisfaction mean?;User comfort and attitudes.
+What is context of use?;Users, goals, tasks, resources, environment.
+What is a UX goal?;Desired user experience (e.g., simple, enjoyable).
+Why do we pick 3 UX goals?;To guide design decisions and evaluation.
+What is a task?;A goal for the user without describing how to do it.
+What is a happy path?;All screens + user actions when everything goes right.
+What must a happy path include?;Screens, arrows, user actions, short labels.
+What is NOT included in a happy path?;Errors.
+Name the 5 UI design principles.;Visibility, Feedback, Constraints, Consistency, Affordance.
+Define Visibility.;Users can see available actions and system state.
+Define Feedback.;System clearly reacts to user actions.
+Define Constraints.;Limit actions to prevent errors.
+Define Consistency.;Similar elements behave similarly.
+Define Affordance.;Appearance suggests how to use it.
+Name 3 widgets for exactly two options.;Radio, Toggle, Segmented control.
+Why avoid checkboxes for two exclusive options?;Can allow zero/ambiguous selections.
+What is a good error message?;Polite, informative, constructive.
+Why avoid technical error codes?;Users do not understand them; not helpful.
+What is think-aloud testing?;Users verbalize thoughts while performing tasks.
+What is collected in think-aloud?;Effectiveness, efficiency, satisfaction, problems.
+What is the purpose of think-aloud?;Find usability problems early.
+What are the Five Acts?;Welcome, Background Qs, Prototype Intro, Tasks, Debrief.
+What is a user story format?;As a <user> I want <goal> so that <reason>.
+Define functional requirements.;Describe what the system must do.
+Define non-functional requirements.;Describe how well the system must perform.
+Give a UX NFR example.;SUS ≥ 68 with at least 5 users.
+What 3 parts must a use case include?;Preconditions, Basic Flow, Alternative Flow.
+Define preconditions.;Must be true before the use case starts.
+Define basic flow.;Main sequence when everything goes right.
+Define alternative flow.;Sequence when something deviates (e.g., invalid input).
+Name 4 types of functional tests.;Unit, Integration, System, Acceptance.
+What is boundary value testing?;Testing at limits of valid ranges.
+What is equivalence partitioning?;Grouping inputs that behave the same.
+What are the 3 parts of a class diagram?;Class name, Attributes, Methods.
+UML attribute syntax example.;+ email: string
+UML method syntax example.;+ login(email: string, password: string): bool
+What do + and - mean in UML?;+ public, - private.
