@@ -8,7 +8,7 @@ class App:
 
     def __init__(self):
         # Load questions
-        self.data_list = self.get_questions_from_db("analysis_design_deck.csv")
+        self.data_list = self.get_questions_from_db("20_card_deck.csv")
         # To display questions
         self.wrong_questions_list = []
         random.shuffle(self.data_list)
@@ -23,9 +23,19 @@ class App:
         frame = tk.Frame(self.root)
         frame.pack(padx=5, pady=12)
 
+        # Diplay question type
+        self.question_type = tk.Label(
+            frame,
+            text="test",
+            font=("Arial", 30, "bold"),
+            wraplength=600,
+            justify="left",
+        )
+        self.question_type.grid(row=0, column=0, sticky="w")
+
         # Frame for question + answer
         self.question_tk = tk.LabelFrame(frame, text="Question")
-        self.question_tk.grid(row=0, column=0, padx=50, pady=30, sticky="ew")
+        self.question_tk.grid(row=1, column=0, padx=50, pady=30, sticky="ew")
 
         # Question label (keep a reference so we can update)
         self.question_label = tk.Label(
@@ -53,11 +63,11 @@ class App:
             text=f"Remaining: {len(self.data_list)}",
             font=("Arial", 18),
         )
-        self.remaining_label.grid(row=1, column=0, sticky="w", pady=(10, 0))
+        self.remaining_label.grid(row=2, column=0, sticky="w", pady=(10, 0))
 
         # Buttons sub frame from main
         buttons_frame = tk.Frame(frame)
-        buttons_frame.grid(row=2, column=0, pady=10, sticky="ew")
+        buttons_frame.grid(row=3, column=0, pady=10, sticky="ew")
 
         self.show_answer_btn = tk.Button(
             buttons_frame,
@@ -95,31 +105,41 @@ class App:
 
     def next_question(self):
         """Move to the next question."""
+        # Save the question type
+        question_type = ""
         # If question in data list and wrong list then 7.5% ish chance to get a wrong
         if self.data_list and self.wrong_questions_list:
-            random_question_pull = random.randint(0, 15)
-            if random_question_pull == 5:
+            # If the len of questions is smaller than the wrong questions, then more wrong questions come
+            if len(self.data_list) + 5 < len(self.wrong_questions_list):
+                random_question_pull = random.randint(0, 3)
+            else:
+                random_question_pull = random.randint(0, 10)
+            if random_question_pull == 2:
                 self.remaining_label.config(
                     text=f"Wrong questions remaining: {len(self.wrong_questions_list)}"
                 )
                 self.current_question, self.current_answer = (
-                    self.get_one_woring_question()
+                    self.get_one_wrong_question()
                 )
+                question_type = "Question from Wrong"
             else:
                 self.current_question, self.current_answer = self.get_one_question()
+                question_type = "New Question from queue"
                 self.remaining_label.config(text=f"Remaining: {len(self.data_list)}")
 
         elif self.data_list:
             # Get next question
+            question_type = "New Question from queue"
             self.current_question, self.current_answer = self.get_one_question()
             self.remaining_label.config(text=f"Remaining: {len(self.data_list)}")
 
         elif not self.data_list and self.wrong_questions_list:
             # If data_list is done show wrong questions
+            question_type = "Question from Wrong"
             self.remaining_label.config(
                 text=f"Wrong questions remaining: {len(self.wrong_questions_list)}"
             )
-            self.current_question, self.current_answer = self.get_one_woring_question()
+            self.current_question, self.current_answer = self.get_one_wrong_question()
 
         elif not self.data_list and not self.wrong_questions_list:
             # No more questions
@@ -134,6 +154,7 @@ class App:
             return
 
         # Update GUI
+        self.question_type.config(text=question_type)
         self.next_question_btn.config(state=tk.DISABLED)
         self.question_label.config(text=self.current_question)
         self.answer_label.config(text="")  # clear old answer
@@ -150,8 +171,10 @@ class App:
         question = self.data_list.pop()
         return question[0], question[1]
 
-    def get_one_woring_question(self):
-        """Pop one question for wrong list after csv list is done"""
+    def get_one_wrong_question(self):
+        """Pop one question for wrong list"""
+        # So you dont get the last markd wrong question
+        random.shuffle(self.wrong_questions_list)
         question = self.wrong_questions_list.pop()
         return question[0], question[1]
 
