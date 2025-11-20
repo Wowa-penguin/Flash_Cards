@@ -1,14 +1,15 @@
 import tkinter as tk
 import csv
 import random
+import os
 
 
 class App:
     """Main class"""
 
-    def __init__(self):
+    def __init__(self, deck):
         # Load questions
-        self.data_list = self.get_questions_from_db("20_card_deck.csv")
+        self.data_list = self.get_questions_from_db(deck)
         # To display questions
         self.wrong_questions_list = []
         random.shuffle(self.data_list)
@@ -194,4 +195,15 @@ class App:
 
 
 if __name__ == "__main__":
-    App().run()
+    file_list = []
+    for count, file in enumerate(os.listdir()):
+        if ".csv" in file:
+            print(f"{count}, {file}")
+            file_list.append(file)
+    user_pick_input = int(input("Pick from number: "))
+
+    try:
+        deck = file_list[user_pick_input]
+        App(deck=deck).run()
+    except IndexError:
+        print("Not a Valid deck ")
