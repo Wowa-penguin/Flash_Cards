@@ -1,0 +1,29 @@
+imgs/1.png;Θ(N) | ~ N
+imgs/2.png;Θ(log N) | ~log₂N
+imgs/3.png;Θ(N) | ~ N
+imgs/4.png;Θ(log N) | ~log₂N
+imgs/5.png;Θ(N²) | ~ N²
+imgs/6.png;Θ(N²) | ~ N² / 2
+imgs/7.png;Θ(N²) | ~ N² / 2
+imgs/8.png;Θ(N²) | ~ N²
+imgs/9.png;Θ(N²) | ~ N² / 2
+imgs/10.png;Θ(N log N) | ~ N log₂N
+imgs/11.png;Θ(N log N) | ~ N log₂N
+imgs/12.png;Θ(N³) | ~ N³
+imgs/13.png;Θ(N³) | ~ N³ / 2
+imgs/14.png;Θ(N log N) | ~ N log₃N
+imgs/15.png;Θ(N log N) | ~ N log₂N
+imgs/16.png;Θ(N) | ~ N
+imgs/17.png;Θ(log N) | ~log₂N
+imgs/18.png;Θ(2ᴺ) | ~ 2ᴺ
+imgs/19.png;Θ(N) | ~ N
+imgs/20.png;Θ(N) | ~ N
+imgs/21.png;Θ(N) | ~ 2N
+imgs/22.png;Θ(N²) | ~ N² / 2
+imgs/23.png;Θ(N) | ~ N
+imgs/24.png;Θ(N²) | ~ N² / 2
+imgs/25.png;Θ(N³) | ~ N³
+imgs/26.png;Θ(N) | ~ N
+imgs/27.png;Θ(N log N) | ~ N log₃N
+imgs/28.png;Θ(N²) | ~ N² / 2
+imgs/29.png;Θ(N³) | ~ N³ / 6
