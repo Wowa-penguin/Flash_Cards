@@ -1,0 +1,372 @@
+What is a process in an operating system?;A running program with its own address space, file descriptor table, and PCB.
+What is a thread in an operating system?;A unit of execution within a process that shares the address space and open files, but has its own stack and TCB.
+What is a PCB?;A Process Control Block, a kernel structure per process containing items such as PID, state, memory map, file descriptor table, and exit status.
+What is a TCB?;A Thread Control Block, a per-thread structure containing registers, stack pointer, and scheduling information.
+What is a context switch?;Saving the current thread's CPU state and loading another thread's state.
+Why is a context switch expensive?;Because it may flush the TLB and cool the CPU caches.
+What is a zombie process?;A terminated child whose parent has not called wait yet, so the kernel keeps its exit status.
+What is an orphan process?;A running child whose parent has exited, so it is adopted by init, PID 1.
+What is preemption?;The OS forcibly taking the CPU away from a running process or thread, usually via a timer interrupt.
+What is starvation in scheduling?;A runnable process never gets CPU time because the scheduler keeps favoring others.
+What is the convoy effect?;Short jobs wait behind a long job, a classic problem of FCFS scheduling.
+What are the three ways the OS is activated?;Interrupts, exceptions, and system calls.
+What is turnaround time?;Completion time minus arrival time.
+What is waiting time?;Turnaround time minus burst time.
+What is response time?;First run time minus arrival time.
+What metric measures jobs completed per unit time?;Throughput.
+What is CPU utilization?;One minus the idle fraction.
+Which non-preemptive scheduler minimizes average turnaround time?;SJF.
+Which preemptive scheduler minimizes average turnaround time?;SRTF.
+Which scheduler tends to minimize response time at the cost of turnaround?;Round Robin.
+What can user mode not do?;Execute privileged instructions or access all memory freely.
+What can kernel mode do?;Access hardware fully and run OS code.
+What is an interrupt?;An asynchronous hardware event such as a timer or I O signal that transfers control to the OS.
+What is an exception?;A synchronous CPU fault such as a page fault, divide by zero, or general protection fault.
+What is a system call?;An explicit trap from user mode into the kernel to request an OS service.
+What often dominates cost in switching-heavy workloads?;Context switch overhead.
+What does wait NULL do?;Waits for any child process.
+What does waitpid pid do?;Waits for a specific child process.
+What should every fork typically be matched by?;A wait call or a SIGCHLD handler, otherwise zombies can leak.
+What is copy on write for fork?;Parent and child initially share read-only pages and a page is copied only when one side writes to it.
+Why is naive fork wasteful?;Because it would copy the entire address space even when the child often calls exec immediately.
+What happens first on a copy on write write access?;The CPU raises a protection fault exception.
+What is the main benefit of copy on write when the child execs immediately?;Zero pages need to be copied.
+In a many-to-one ULT model, what does the kernel see?;One thread per process.
+What is a key disadvantage of many-to-one ULT?;A blocking system call can block the whole process.
+Does many-to-one ULT allow true parallelism on multicore?;No.
+Does one-to-one KLT allow true parallelism on multicore?;Yes.
+What is the main tradeoff of one-to-one KLT?;Independent blocking and real parallelism, but thread management has system call overhead.
+Is it true that single-core CPUs do not need separate TCBs for threads?;False.
+Is switching to a different process faster than switching to a user-level thread in the same process?;No, process switches are slower because the address space changes and TLB and caches are affected.
+How is the OS activated according to the 2022 final question?;By interrupts, exceptions, and system calls.
+A user process accesses a virtual address not present in its address space. Is that an interrupt, exception, system call, or none?;Exception.
+A periodic timer fires and activates the scheduler. Is that an interrupt, exception, system call, or none?;Interrupt.
+A user process adds two CPU registers. Is that an interrupt, exception, system call, or none?;None.
+A user process creates a new file with open. Is that an interrupt, exception, system call, or none?;System call.
+A user program divides by zero using the Intel DIV instruction. Is that an interrupt, exception, system call, or none?;Exception.
+A user process writes to an anonymous pipe with write. Is that an interrupt, exception, system call, or none?;System call.
+A user process reads from a present virtual address on its heap. Is that an interrupt, exception, system call, or none?;None.
+The network controller signals a newly arrived packet. Is that an interrupt, exception, system call, or none?;Interrupt.
+A user process tries to write CR3 in user mode. Is that an interrupt, exception, system call, or none?;Exception.
+A user process creates a new process with fork. Is that an interrupt, exception, system call, or none?;System call.
+A user program performs an integer ADD instruction. Is that an interrupt, exception, system call, or none?;None.
+What happens if a privileged CPU instruction is executed in user mode?;The CPU raises an exception, typically a general protection fault, and control transfers to the kernel.
+Give two examples of privileged CPU instructions.;Examples include CLI or STI, IN or OUT, HLT, and loading control registers such as CR3.
+What is cooperative multitasking?;The running process must yield explicitly or block before another process runs.
+What is preemptive multitasking?;The OS uses a timer interrupt to forcibly context switch the running process.
+Which style do real operating systems like Linux and Windows use?;Preemptive multitasking.
+Which PCB versus TCB statement is true: open files are shared by all threads or private per thread?;Open files are shared by all threads and belong to the process PCB.
+Which PCB versus TCB statement is true: CPU registers are shared by all threads or private per thread?;CPU registers are private per thread and belong in the TCB.
+Which PCB versus TCB statement is true: process exit status is shared by all threads or private per thread?;The process exit status belongs to the process PCB.
+Which PCB versus TCB statement is false: the code and the stack are both shared by all threads?;False, the code is shared but each thread has its own stack.
+What does fork do?;It creates a new process that is an almost identical copy of the current process in a separate address space.
+What value does fork return in the child?;Zero.
+What value does fork return in the parent?;The child's PID.
+In the test exam process tree, what becomes the parent of PID 20 after PID 10 exits?;PID 1, init.
+In the test exam process tree, what is the parent of PID 23?;PID 20.
+In the test exam process tree, what value does wait return in PID 20?;22.
+In the test exam process tree, what is the state of PID 22 after wait reaps it?;N, meaning it is gone or reaped.
+In the test exam process tree, what is the state of PID 23 running less?;R, running.
+To run a child program while keeping the parent alive, what must you usually do?;Fork first and then call exec in the child.
+Does exec return a new PID?;No, exec keeps the same PID.
+When does exec return to the caller?;Only on error.
+Does exec always close all open file descriptors?;No, only descriptors marked close on exec are closed.
+In the 2024 retake code trace, does execvp of cp run perror on success?;No, perror runs only if execvp fails.
+In the 2024 retake code trace, does the parent wait for the child?;No.
+In the 2024 retake code trace, what PID does printf print in the parent?;The child PID.
+In the 2022 RR example with quantum 1 and P1 3, P2 1, P3 2, P4 2, what is the average turnaround time?;5.75.
+In the 2022 RR example with quantum 1 and P1 3, P2 1, P3 2, P4 2, what schedule runs from t0 to t7?;P1, P2, P3, P4, P1, P3, P4, P1.
+In the 2022 non-preemptive SJF example with the same four processes, what is the average turnaround time?;4.25.
+In the 2022 non-preemptive SJF example with the same four processes, what schedule runs from t0 to t7?;P2, P3, P3, P4, P4, P1, P1, P1.
+In the 2024 FCFS example with arrivals P2 at 0, P4 at 1, P3 at 2, P1 at 3, what is the average turnaround time?;6.
+In the 2024 FCFS example, what schedule runs from t0 to t9?;P2, P2, P2, P2, P2, P4, P4, P3, P1, P1.
+In the 2024 SRTF example, what schedule runs from t0 to t9?;P2, P4, P3, P4, P1, P1, P2, P2, P2, P2.
+In the 2024 SRTF example, what is the average turnaround time?;4.25.
+In the test exam with P1 at 2 for 5, P2 at 1 for 4, P3 at 3 for 1, what is the preemptive SJF schedule from t1 to t10?;P2, P2, P3, P2, P2, P1, P1, P1, P1, P1.
+In the same test exam, what is the RR schedule with quantum 1 from t1 to t10?;P2, P1, P2, P3, P1, P2, P1, P2, P1, P1.
+In the 2024 retake RR example, what schedule runs from t0 to t9?;P2, P2, P1, P3, P4, P2, P1, P4, P2, P2.
+In the 2024 retake RR example, what is the average turnaround time?;5.75.
+Which scheduling algorithm is fair and avoids starvation but is not optimal for average turnaround?;Round Robin.
+Which scheduling algorithm requires a priori knowledge of burst times to minimize average wait and turnaround?;SJF.
+Which scheduling algorithm approximates SJF using feedback from past behavior?;MLFQ.
+Which scheduling algorithm is simple but suffers from the convoy effect?;FCFS.
+What is the goal of MLFQ?;Approximate SJF without knowing burst times in advance and give interactive jobs good response time.
+In MLFQ, where does a new job start?;At the highest priority queue.
+In MLFQ, what happens when a job uses up its allotment at a level?;It is demoted.
+In MLFQ, what does the periodic priority boost do?;Moves jobs back to the top queue to prevent starvation and handle phase changes.
+What is the page size formula from offset bits OB?;Two to the power of OB bytes.
+What is the number of page table entries from VPN bits NB?;Two to the power of NB entries.
+What is the page table size formula?;Number of entries times bytes per entry.
+How do you compute effective access time with a TLB for a single-level page table?;EAT equals h times tT plus tM plus one minus h times tT plus 2 times tM.
+How do you compute page fault EAT?;EAT equals one minus p times tM plus p times tF.
+Why can a tiny page fault probability still dominate EAT?;Because page fault service time is much larger than normal memory access time.
+What problem does the TLB solve?;It avoids the many memory accesses needed for page table walks on every reference.
+What is a TLB?;A small hardware cache of recently used virtual page number to physical frame number translations.
+What happens on a TLB hit?;The PFN is returned quickly and the access proceeds.
+What happens on a TLB miss?;The hardware or OS walks the page table, installs the translation in the TLB, and retries.
+What does ASID or PCID help avoid?;Full TLB flushes on context switch.
+How do larger pages affect TLB coverage?;Each TLB entry covers more memory, so fewer entries are needed.
+What is demand paging?;Pages are loaded into RAM only when first accessed.
+What happens if a faulting virtual address is not legal for the process?;The OS delivers SIGSEGV and the process usually dies.
+What happens if a needed page was evicted but is still a valid address?;The OS finds a frame, loads the page from disk, updates the PTE, and retries the instruction.
+What is thrashing?;The system spends more time swapping pages than doing useful work.
+What causes thrashing?;The combined working set of active processes exceeds RAM.
+What is a working set?;The set of pages referenced in the last delta time units.
+How can the OS mitigate thrashing?;Reduce load, use local or working-set-aware replacement, or add more RAM.
+What is Belady's anomaly?;With FIFO, adding more frames can sometimes increase the number of page faults.
+Which page replacement algorithms are stack algorithms that do not exhibit Belady's anomaly?;LRU and OPT.
+What does the present or valid bit in a PTE mean?;Whether the page is resident in RAM.
+Which PTE bit is used by CLOCK?;The accessed bit.
+Which PTE bit shows whether a page must be written back on eviction?;The dirty bit.
+What does the NX bit do?;Marks a page as non-executable.
+Which replacement algorithm evicts the page used farthest in the future?;OPT.
+Why is OPT not feasible in a real OS?;Because the OS does not know future page references.
+Which replacement algorithm evicts the oldest loaded page?;FIFO.
+Which replacement algorithm evicts the least recently used page?;LRU.
+Which replacement algorithm uses a reference bit and a circular scan?;CLOCK or second chance.
+Which replacement algorithm evicts a uniformly random page?;RANDOM.
+What is external fragmentation?;Enough total free memory exists, but it is split into pieces too small to satisfy a request.
+What is internal fragmentation?;Unused memory inside an allocated unit because the allocation granularity is larger than the request.
+Does paging eliminate external fragmentation?;Yes, fixed-size pages eliminate external fragmentation.
+What fragmentation does paging introduce?;Internal fragmentation.
+How do huge pages trade off fragmentation and translation overhead?;They increase internal fragmentation but reduce TLB misses and shrink page tables.
+What is first fit in a heap allocator?;Return the first free block large enough for the request.
+What is next fit in a heap allocator?;Like first fit, but continue scanning from where the last search stopped.
+What is best fit in a heap allocator?;Return the smallest free block that fits.
+What is worst fit in a heap allocator?;Return the largest free block.
+What is coalescing in a heap allocator?;Merging adjacent free blocks when memory is freed.
+What is the buddy allocator?;An allocator using power-of-two block sizes with buddy blocks that can split and merge efficiently.
+What is a main drawback of the buddy allocator?;It can waste a lot of space through internal fragmentation.
+Why can Java or Go compact heaps more easily than C?;They track pointers, while C does not have runtime metadata for all pointers.
+What is temporal locality?;Recently accessed data is likely to be used again soon.
+What is spatial locality?;Data near recently accessed data is likely to be used soon.
+What is a cache line?;The unit of transfer between RAM and cache, typically 64 bytes on x86.
+What are the three Cs of cache misses?;Compulsory, capacity, and conflict misses.
+What is write-through caching?;Every write updates both the cache and memory.
+What is write-back caching?;Writes update the cache and memory is updated only when the line is evicted.
+What extra metadata does a write-back cache need?;A dirty bit.
+What is PIPT cache indexing and tagging?;Physical index and physical tag.
+What is VIPT cache indexing and tagging?;Virtual index and physical tag.
+What is VIVT cache indexing and tagging?;Virtual index and virtual tag.
+Which cache design is common for L1 data caches?;VIPT.
+Which cache design is common for L2 and L3 caches?;PIPT.
+Which cache design suffers from both homonyms and synonyms?;VIVT.
+Is PIVT a common real-world cache design?;No.
+Do PIPT caches need invalidation on every context switch?;No.
+Can VIPT caches begin indexing in parallel with TLB lookup?;Yes.
+Do write-back caches require a dirty bit per line?;Yes.
+What does Meltdown exploit to leak kernel data?;Out-of-order execution plus a cache side channel.
+What is the main mitigation for Meltdown mentioned in the slides?;Kernel Page-Table Isolation, KPTI.
+What does Spectre exploit?;Branch prediction and speculative execution.
+What is a named file-backed page mapping?;A page whose content comes from a file, such as text segments, data segments, shared libraries, or mmap files.
+What is an anonymous page mapping?;A page with no file backing, such as heap, stack, or MAP_ANONYMOUS memory.
+How is a clean file-backed page evicted?;It can simply be dropped and later reread from the file.
+How is an anonymous page evicted?;It must be written to swap before eviction.
+What are shadow page tables in virtualization?;Hypervisor-maintained tables that directly map guest virtual addresses to host physical addresses.
+What is a key cost of shadow page tables?;The hypervisor must trap guest page-table updates to keep shadows in sync.
+What are EPT and NPT?;Hardware nested page tables that let the CPU perform guest and host translations.
+What is a key cost of nested paging with EPT or NPT?;A TLB miss can require many memory accesses to walk both translation trees.
+If the page offset has 12 bits, what is the page size?;4 KiB.
+If the page offset has 16 bits, what is the page size?;64 KiB.
+If the page offset has 21 bits, what is the page size?;2 MiB.
+With 20 VPN bits in a single-level page table, how many entries are there?;1,048,576.
+With 20 VPN bits and 4 bytes per entry, how large is the page table?;4 MiB.
+With a 4 MiB page table and 4 KiB pages, how many pages are needed to store it?;1024 pages.
+In the 2022 four-level paging question with 512 entries per page, how many index bits are used in total?;36 bits.
+In the same 2022 four-level paging question, how many page offset bits are used?;12 bits.
+In the same 2022 four-level paging question, what is the virtual address size?;48 bits.
+In the 2024 retake 10 10 12 two-level page table question, what is the page size?;4096 bytes or 4 KiB.
+In that same two-level page table question, how much present virtual memory is mapped?;4 MiB.
+In the same question, is virtual address 0x00001050 valid?;Yes.
+In the same question, what physical address does virtual address 0x00001050 translate to?;0x00441050.
+If a process accesses a not-present address that is not valid for the process, what happens?;The OS delivers SIGSEGV, usually terminating the process.
+If a process accesses a not-present but valid text page that was evicted, what does the OS do?;Finds a frame, reads the page from disk, updates the PTE, and retries the faulting instruction.
+Why is a single-level page table impractical for the 48-bit VA example with 8-byte entries?;It would need 2 to the 36 entries, about 512 GiB per process.
+How does Linux manage page table memory more efficiently than a single-level page table?;By using multi-level hierarchical page tables and allocating page-table pages only for mapped regions.
+For OB equals 21, what is the page size in the 2024 linear page table formula slide?;2 MiB.
+For NB equals 27, how many page table entries are there?;2 to the 27 entries, about 134 million.
+Are large pages an advantage or disadvantage for internal fragmentation?;A disadvantage.
+Are large pages an advantage or disadvantage for page table size?;An advantage.
+What impact do larger pages have on the TLB?;They increase TLB coverage and reduce misses for the same memory footprint.
+With 5 paging levels and 9 index bits per level plus a 12-bit offset, how wide is the virtual address?;57 bits.
+Why is the physical address width 52 bits in the 5-level example?;A 64-bit PTE uses 12 low bits for flags, leaving 52 bits for the physical frame number.
+In a 64-bit CPU with 64 GB RAM, which page table variant is the best practical choice according to the quiz slide?;Hierarchical multi-level page tables.
+In the 4-level paging minimum page-table pages example for a 4 MiB process, how many page-table pages are needed?;5 pages.
+In the hashed inverted page table size example with 1 GiB RAM and 4 KiB pages, how large is the table?;1024 pages or 4 MiB.
+How large is an inverted page table relative to processes and virtual memory usage?;Its size depends on the number of physical frames, not the number of processes or the amount of virtual memory.
+In the 2024 segmentation VA to PA question, what does 0x30008 translate to?;0x08008.
+In the 2024 segmentation VA to PA question, what happens to 0x12345?;SEGFAULT.
+In the 2024 segmentation VA to PA question, what does 0x22222 translate to?;0x02222.
+In the 2024 segmentation PA to VA question, what virtual address maps to physical address 0x21234?;0x01234.
+In the 2024 segmentation PA to VA question, what is the result for physical address 0x12345?;NONE.
+In the 2024 segmentation PA to VA question, what virtual address maps to physical address 0x20002?;0x10002.
+In the 2022 LRU example with 4 frames and references 4, 2, 1, 3, 5 after t0, how many faults occur from t1 to t5?;4 page faults.
+In the RANDOM replacement slide, is the exact table deterministic?;No, the outcome depends on random evictions.
+In the CLOCK worked example with reference string 1, 2, 3, 1, 4, 2, 5 and 3 frames, how many page faults occur?;5.
+What does CLOCK do when it sees a frame with reference bit 1 during eviction scan?;It clears the bit to 0 and gives the page a second chance.
+What does CLOCK do when it sees a frame with reference bit 0 during eviction scan?;It evicts that page.
+Is FIFO susceptible to Belady's anomaly?;Yes.
+Is CLOCK also called second chance?;Yes.
+Does MRU evict the most recently used page?;Yes.
+Should a good replacement algorithm maximize page faults?;No, it should minimize them.
+Does FIFO guarantee the fewest page faults?;No.
+Is RANDOM avoided in practice because it is computationally expensive?;No.
+Does LRU consider the least recently used page for eviction?;Yes.
+Is external fragmentation a problem for variable-size allocators but not fixed-size page allocators?;Yes.
+Can internal fragmentation be a disadvantage of huge pages?;Yes.
+What is a race condition?;Concurrent access to shared data where the final result depends on interleaving and at least one access is a write.
+What is a critical section?;A code region that must be executed by at most one thread at a time.
+What three properties must a correct critical section implementation provide?;Mutual exclusion, progress, and bounded waiting.
+Why can counter increment cause a race condition?;Because it compiles into multiple instructions such as load, increment, and store.
+What are the four Coffman conditions for deadlock?;Mutual exclusion, hold and wait, no preemption, and circular wait.
+How can deadlock be prevented?;Break at least one Coffman condition by design.
+What is deadlock avoidance?;Grant resources only if the resulting state stays safe, for example with Banker's algorithm.
+What is deadlock detection and recovery?;Allow deadlocks, detect them later, then recover by killing a process or forcing preemption.
+What is the ostrich algorithm for deadlocks?;Ignore deadlocks and rely on rebooting or similar recovery.
+What is priority inversion?;A high-priority thread waits on a lock held by a low-priority thread while a medium-priority thread preempts the low-priority one.
+How is priority inversion fixed?;Priority inheritance.
+What is livelock?;Threads keep running but make no useful progress.
+How is livelock different from deadlock?;In livelock, threads are not blocked, they are active but ineffective.
+What is a mutex?;A binary lock with ownership, used to protect a critical section.
+What is a binary semaphore?;A 0 or 1 synchronization primitive without ownership semantics.
+What is a counting semaphore?;A semaphore with a nonnegative integer value used to model a limited number of resources.
+What is a condition variable?;A primitive used with a mutex so threads can sleep until a condition becomes true.
+What is a monitor?;A language-level construct combining mutual exclusion with built-in condition variables.
+What is the rule of thumb for mutex versus CV versus counting semaphore?;Use a mutex for mutual exclusion, a CV to wait for state changes, and a counting semaphore to limit resource count.
+What hardware operations are spin locks built on?;Atomic read-modify-write instructions such as test-and-set or compare-and-swap.
+Do spin locks require kernel mode or privileged instructions?;No, user-space atomic instructions are enough.
+In the pipe API, what is fd 0 and fd 1 after pipe fd?;fd 0 is the read end and fd 1 is the write end.
+Why must every unused pipe end be closed?;Otherwise the reader may never observe EOF.
+What does dup2 old new do?;It replaces file descriptor new with a duplicate of old.
+In the correct getTicket implementation, what ticket values can three concurrent threads get?;1, 2, and 3 in some order.
+Why is the correct getTicket implementation synchronized correctly?;The lock protects the increment and the local variable captures the value before unlock.
+What are the two bugs in the 2022 buggy getTicket code?;The unlock uses the wrong mutex name and the function returns lastTicket outside the critical section.
+Give one possible bad outcome from the buggy getTicket code.;An outcome such as 3, 3, 3 can occur.
+What are the three bugs in the 2024 my_malloc code?;The return type should be void pointer, returning while holding the lock causes deadlock, and allocate_block runs after unlock causing a race.
+What are the two bugs in the 2024 retake my_malloc code?;find_free_block runs before taking the lock and returning NULL while holding the lock leaks the lock.
+For a very short critical section like getTicket, which primitive minimizes overhead best?;A spin lock.
+Are spin locks efficient with low contention and short critical sections?;Yes.
+What is a spin lock?;A lock where the waiting thread busy-waits in a loop checking for availability.
+Are spin locks mainly useful on single-core CPUs?;No, they are mainly useful on multi-core CPUs.
+Do blocking locks require a system call to put a thread to sleep?;Yes.
+Do anonymous pipes need application-level locks around read and write?;No, the kernel pipe buffer already handles synchronization.
+Why is a mutex alone not enough to implement a bounded buffer efficiently?;Consumers or producers would have to busy-wait because a mutex cannot put them to sleep until the condition changes.
+What extra primitive solves the bounded buffer problem efficiently?;Condition variables or semaphores.
+In the semaphore bounded buffer, what should empty start at for a buffer of size 3?;3.
+In the semaphore bounded buffer, what should full start at?;0.
+In the semaphore bounded buffer, what should mutex start at?;1.
+Are anonymous pipes based on shared memory?;No, they use kernel buffers.
+Do POSIX message queues provide bidirectional communication on the same system?;Yes.
+Do named pipes work across different hosts over a network?;No, sockets are needed for network communication.
+Can accessing shared memory without synchronization cause races?;Yes.
+After setup, does shared memory IPC allow direct memory access without system calls on each access?;Yes.
+Must message-passing APIs use an explicit mutex on every send and receive?;No, synchronization is handled by the IPC mechanism.
+Are anonymous pipes message-passing IPC?;Yes.
+Are anonymous pipes bidirectional by default?;No, they are unidirectional.
+Are POSIX message queues for different hosts over a network?;No, they are local IPC.
+Does fork automatically close inherited anonymous pipe file descriptors in the child?;No.
+Does shared-memory IPC with a linked list require synchronization?;Yes, otherwise the shared data structure can be corrupted.
+What minimum additions create a deadlock in the 2022 RAG question?;Add P2 waiting for R3 and assign R3 to P1, creating the cycle P1 to R2 to P2 to R3 to P1.
+Is the 2024 RAG example deadlocked?;No.
+For a resource allocation graph with single-instance resources, when does deadlock exist?;If and only if the graph contains a cycle.
+In the readers writers test exam, under reader preference, which arrives before writer w1 gets a turn?;Readers r3 and r4.
+In the readers writers test exam, under writer preference, what order occurs after r1 and r2 finish?;w1, w2, w3, then r3 and r4.
+What is polling in I O?;The CPU repeatedly checks a device status register.
+What is interrupt-driven I O?;The CPU starts the request and the device interrupts when it finishes.
+What is DMA?;A controller transfers data directly between device and RAM and interrupts only when the transfer completes.
+Does DMA eliminate interrupts entirely?;No, it usually still causes one interrupt at the end of the transfer.
+When is polling sensible?;For very fast devices or when latency matters more than CPU efficiency.
+Why is DMA essential for high-bandwidth devices?;Because it avoids per-word CPU involvement.
+Can disabling interrupts on one core help avoid deadlock with a spin lock and an interrupt handler on that same core?;Yes.
+Does disabling interrupts on one core solve the problem across all cores?;No.
+On an interrupt, does the CPU save the current context before running the handler?;Yes.
+What do rwx bits mean on a regular file?;r means read contents, w means modify contents, and x means execute the file.
+What do rwx bits mean on a directory?;r lists names, w creates renames or deletes entries, and x allows traversal.
+What does the sticky bit on a directory do?;Only the file owner or root can delete entries there even if the directory is writable.
+To delete a file, what permissions matter most?;Write and execute on the parent directory, not write permission on the file itself.
+In the permissions example, can anna list /shared?;Yes.
+In the permissions example, can anna cd into /shared?;Yes.
+In the permissions example, can anna read secret.txt?;Yes.
+In the permissions example, can anna write to secret.txt?;No.
+In the permissions example, can anna delete secret.txt in the sticky directory?;No.
+In the permissions example, can anna execute run.sh?;Yes.
+In the permissions example, can anna create a new file in /shared?;Yes.
+Which file allocation method has severe external fragmentation?;Contiguous allocation.
+Which file allocation method has O n random access because you must walk the chain?;Linked or FAT allocation.
+Which file allocation method supports sparse files efficiently?;Indexed allocation with inodes.
+What metadata does a per-process file descriptor table entry point to?;A system-wide open-file-table entry.
+What does the system-wide open file table store?;Current offset, access mode, and a pointer to the inode.
+What does the in-memory inode table store?;File metadata such as size, permissions, block pointers, and reference count.
+What does dup fd imply about file offsets?;The duplicated descriptors share the same open-file-table entry and therefore the same file offset.
+What happens to file offsets across fork?;Parent and child share open-file entries and therefore share offsets.
+What is the HDD block read time formula?;Seek time plus rotational latency plus transfer time.
+At 7200 RPM, what is the average rotational latency?;About 4.17 milliseconds.
+Why is sequential HDD I O much faster than random I O?;Seek and rotational costs are amortized over many blocks.
+Why are SSD random reads much closer to sequential reads than HDD reads?;Because SSDs have no seek or rotational latency.
+Why is journaling used in file systems?;To maintain crash consistency when an update touches multiple blocks.
+What does the journal mode in ext3 or ext4 log?;Both data and metadata.
+What does the ordered mode in ext3 or ext4 log?;Metadata only, while forcing data blocks to be written before the metadata commit.
+What does writeback mode in ext3 or ext4 log?;Metadata only with no strict ordering for data writes.
+What is a directory in Unix-like file systems?;A file containing name to inode-number mappings.
+Where does a file name live, in the inode or the directory entry?;In the directory entry.
+What does renaming a file usually change?;Only a directory entry, not the file's data blocks.
+Can hard links cross mount points or filesystem boundaries?;No.
+Can symbolic links cross filesystem boundaries?;Yes.
+What happens when you try to hard-link /etc/passwd into /home on a different filesystem?;It fails.
+What happens when you create a symlink to /etc/passwd across filesystems?;It succeeds.
+In the 2024 file commands trace, what is the final content of file a?;Hello World.
+In the 2024 file commands trace, what is the final content of file c after mv b c and later append via d?;Good Luck!.
+In the 2024 file commands trace, what is the final state of e?;It is a broken symlink.
+In the 2024 file commands trace, what is the final content of f?;Hello.
+If a symlink target is deleted, what happens to the symlink?;The symlink remains but becomes broken or dangling.
+If you create a hard link within the same filesystem and then delete the original file, what happens to the hard link?;The data remains accessible through the hard link until the link count reaches zero.
+In the inode reading example, what is read from test.txt at offset 1500?;Zero.
+Why does reading offset 1500 from test.txt return zero in the inode example?;Because the relevant block is unallocated, representing a hole in a sparse file.
+For a very large offset, which file allocation method accesses the target block with simple arithmetic?;Contiguous allocation.
+For a very large offset, which file allocation method may require following hundreds of thousands of links?;Chained or FAT allocation.
+For a very large offset, which file allocation method usually needs only a few inode or indirect-block reads?;Indexed allocation.
+With 1 KiB blocks and 4-byte pointers, how many pointers fit in one indirect block?;256.
+With 1 KiB blocks, 10 direct pointers, and one single indirect, what is the maximum direct-only size?;10 KiB.
+With 1 KiB blocks, 10 direct pointers, and one single indirect, what is the maximum size using direct plus single indirect?;266 KiB.
+With 1 KiB blocks, 10 direct pointers, one single indirect, and one double indirect, what is the maximum total size?;65802 KiB.
+With 2 KiB blocks and 4-byte pointers, how many pointers fit in one indirect block?;512.
+With 2 KiB blocks and 10 direct pointers, what is the maximum direct-only size?;20 KiB.
+With 2 KiB blocks and one single indirect, what is the maximum size using direct plus single indirect?;1044 KiB.
+With 2 KiB blocks and one double indirect, what is the maximum total size?;525332 KiB.
+What is a sparse file?;A file with holes that read as zeros even though no disk blocks are allocated there.
+Which allocation strategy best supports sparse files?;Indexed allocation with inodes.
+Does a Unix inode store the file name?;No.
+Does a Unix inode store the file size?;Yes.
+Does a Unix inode store the number of hard links?;Yes.
+Does a Unix inode store the number of symbolic links to the file?;No.
+Does a Unix inode store access permissions?;Yes.
+Does a Unix inode store the actual file content bytes directly?;No, it stores pointers to data blocks.
+Is the size of a FAT proportional to the number of blocks in the file system?;Yes.
+Does FAT allocate each file as one contiguous range of blocks?;No.
+Is random access generally easier and faster in inode-based indexed allocation than in FAT?;Yes.
+Do inode-based file systems use indirect or multi-level pointers to support both small and large files?;Yes.
+Do journaling file systems simplify recovery after a crash?;Yes.
+Where are access timestamps stored in an indexed-allocation file system?;In the inode.
+Where are file permissions stored in an indexed-allocation file system?;In the inode.
+Where are block numbers of file data stored?;In the inode for direct pointers and in indirect blocks for deeper levels.
+Where is the file name stored?;In the directory entry.
+Where is the name of the parent directory stored?;Not directly in the inode, it is found through directory structure and dot dot entries.
+With RAID 0 on 8 disks of 4 TiB, how much usable storage is available?;32 TiB.
+With RAID 1 on 8 disks of 4 TiB arranged as 4 mirrored pairs, how much usable storage is available?;16 TiB.
+With RAID 5 on 8 disks of 4 TiB, how much usable storage is available?;28 TiB.
+For RAID 0, what is the minimum number of disk failures causing data loss?;1.
+For RAID 1 with 4 mirrored pairs, what is the minimum number of failures causing data loss?;2, if both are in the same pair.
+For RAID 5, what is the minimum number of failures causing data loss?;2.
+How much fault tolerance does RAID 0 provide?;None.
+How much fault tolerance does RAID 1 provide?;One disk failure per mirrored pair.
+How much fault tolerance does RAID 5 provide?;It can tolerate one disk failure total.
+What fraction of raw capacity is usable in RAID 0?;100 percent.
+What fraction of raw capacity is usable in RAID 1?;50 percent.
+What fraction of raw capacity is usable in RAID 5 with N disks?;N minus 1 divided by N.
+What is the one-block write cost of RAID 0?;One write.
+What is the one-block write cost of RAID 1?;Two parallel writes.
+What is the one-block write cost of RAID 5?;Read modify write, usually 2 reads plus 2 writes.
+What is the main difference between a hard link and a symbolic link?;A hard link is another directory entry to the same inode, while a symbolic link is a separate file containing a path to a target.
+What happens to a hard-linked file's data when one hard link is deleted?;The link count decreases, but the data remains until the count reaches zero.
+What happens to a symbolic link if its target is deleted or renamed?;It becomes broken or dangling.
+Can symbolic links point to directories and nonexistent targets?;Yes.

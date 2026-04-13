@@ -197,10 +197,12 @@ class App:
 
 if __name__ == "__main__":
     file_list = []
-    for count, file in enumerate(os.listdir()):
+    for file in os.listdir():
         if ".csv" in file:
-            print(f"{count}: {file}")
             file_list.append(file)
+
+    for count, csv_file in enumerate(file_list):
+        print(f"{count}: {csv_file}")
     user_pick_input = int(input("Pick from number: "))
 
     try:
