@@ -4,14 +4,6 @@ import csv
 import random
 import os
 
-# Try to import PIL for broader image support (JPEG etc.)
-try:
-    from PIL import Image, ImageTk  # type: ignore
-
-    HAS_PIL = True
-except Exception:
-    HAS_PIL = False
-
 
 class App:
     """Main class"""
@@ -246,28 +238,18 @@ class App:
 
         if os.path.exists(img_path):
             # Try tkinter PhotoImage first (supports PNG/GIF/PPM/PGM)
-            try:
-                new_img = PhotoImage(file=img_path)
-                print(True)
-            except tk.TclError:
-                # Fallback to PIL if available
-                if HAS_PIL:
-                    try:
-                        pil_img = Image.open(img_path)
-                        new_img = ImageTk.PhotoImage(pil_img)
-                    except Exception:
-                        new_img = None
-                else:
-                    new_img = None
+
+            new_img = PhotoImage(file=img_path)
+            print(True)
+
             if new_img:
                 self.image = new_img  # keep reference to avoid GC
                 self.image_label.config(image=self.image)
                 return
-            else:
-                # Failed to load with both methods
-                self._clear_image()
-                # Optionally show short message in console for debugging
-                print(f"Unable to load image: {img_path}")
+            # Failed to load with both methods
+            self._clear_image()
+            # Optionally show short message in console for debugging
+            print(f"Unable to load image: {img_path}")
         else:
             # File doesn't exist
             self._clear_image()
