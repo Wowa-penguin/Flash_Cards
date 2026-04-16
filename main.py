@@ -127,9 +127,11 @@ class App:
                 self.remaining_label.config(
                     text=f"Wrong questions remaining: {len(self.wrong_questions_list)}"
                 )
-                self.current_question, self.current_answer = (
-                    self.get_one_wrong_question()
-                )
+                (
+                    self.current_question,
+                    self.current_answer,
+                    self.question_type_format,
+                ) = self.get_one_wrong_question()
                 question_type = "Question from Wrong"
             else:
                 (
@@ -156,7 +158,9 @@ class App:
             self.remaining_label.config(
                 text=f"Wrong questions remaining: {len(self.wrong_questions_list)}"
             )
-            self.current_question, self.current_answer = self.get_one_wrong_question()
+            self.current_question, self.current_answer, self.question_type_format = (
+                self.get_one_wrong_question()
+            )
 
         elif not self.data_list and not self.wrong_questions_list:
             # No more questions
@@ -188,7 +192,11 @@ class App:
 
     def set_to_wrong_list(self):
         """Adds the question to the woring list"""
-        woring_question = [self.current_question, self.current_answer]
+        woring_question = [
+            self.current_question,
+            self.current_answer,
+            self.question_type_format,
+        ]
         self.wrong_questions_list.append(woring_question)
         self.wrong_btn.config(state=tk.DISABLED)
 
@@ -208,7 +216,7 @@ class App:
         # So you dont get the last markd wrong question
         random.shuffle(self.wrong_questions_list)
         question = self.wrong_questions_list.pop()
-        return question[0], question[1]
+        return question[0], question[1], question[2]
 
     def get_questions_from_db(self, filename):
         """Read questions from CSV (semicolon-separated)."""
