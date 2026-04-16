@@ -242,10 +242,9 @@ class App:
             candidate = os.path.join(script_dir, img_path)
             if os.path.exists(candidate):
                 img_path = candidate
-            # else keep original (maybe the working directory has it)
 
         if os.path.exists(img_path):
-            # Try tkinter PhotoImage first (supports PNG/GIF/PPM/PGM)
+            # Use tkinter PhotoImage(supports PNG) Must be PNG
 
             new_img = PhotoImage(file=img_path)
             print(True)
