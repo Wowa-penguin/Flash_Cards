@@ -1,7 +1,16 @@
 import tkinter as tk
+from tkinter import PhotoImage
 import csv
 import random
 import os
+
+# Try to import PIL for broader image support (JPEG etc.)
+try:
+    from PIL import Image, ImageTk  # type: ignore
+
+    HAS_PIL = True
+except Exception:
+    HAS_PIL = False
 
 
 class App:
@@ -20,6 +29,7 @@ class App:
         # State
         self.current_question = ""
         self.current_answer = ""
+        self.question_type_format = ""
         # Main frame
         frame = tk.Frame(self.root)
         frame.pack(padx=5, pady=12)
@@ -48,6 +58,11 @@ class App:
         )
         self.question_label.grid(row=0, column=0, sticky="w")
 
+        # Image for a question
+        self.image = PhotoImage()
+        self.image_label = tk.Label(self.question_tk, image=self.image)
+        self.image_label.grid(row=0, column=0, rowspan=2, padx=10)
+
         # Answer label (initially empty)
         self.answer_label = tk.Label(
             self.question_tk,
@@ -56,7 +71,7 @@ class App:
             wraplength=600,
             justify="left",
         )
-        self.answer_label.grid(row=1, column=0, sticky="w", pady=(10, 0))
+        self.answer_label.grid(row=2, column=0, sticky="w", pady=(10, 0))
 
         # Remaining questions label
         self.remaining_label = tk.Label(
@@ -125,14 +140,22 @@ class App:
                 )
                 question_type = "Question from Wrong"
             else:
-                self.current_question, self.current_answer = self.get_one_question()
+                (
+                    self.current_question,
+                    self.current_answer,
+                    self.question_type_format,
+                ) = self.get_one_question()
                 question_type = "New Question from queue"
                 self.remaining_label.config(text=f"Remaining: {len(self.data_list)}")
 
         elif self.data_list:
             # Get next question
             question_type = "New Question from queue"
-            self.current_question, self.current_answer = self.get_one_question()
+            (
+                self.current_question,
+                self.current_answer,
+                self.question_type_format,
+            ) = self.get_one_question()
             self.remaining_label.config(text=f"Remaining: {len(self.data_list)}")
 
         elif not self.data_list and self.wrong_questions_list:
@@ -153,12 +176,21 @@ class App:
             self.show_answer_btn.config(state="disabled")
             self.next_question_btn.config(state="disabled")
             self.wrong_btn.config(state=tk.DISABLED)
+            self._clear_image()
             return
 
-        # Update GUI
+        # Check if question is image or text
+        match self.question_type_format:
+            case "string":
+                self._clear_image()
+                self.question_label.config(text=self.current_question)
+            case "img":
+                self.question_label.config(text="")
+                self._update_image()
+
+        # Update GUI default
         self.question_type.config(text=question_type)
         self.next_question_btn.config(state=tk.DISABLED)
-        self.question_label.config(text=self.current_question)
         self.answer_label.config(text="")  # clear old answer
         self.wrong_btn.config(state=tk.ACTIVE)
 
@@ -170,8 +202,14 @@ class App:
 
     def get_one_question(self):
         """Pop one question from the list and return (question, answer)."""
-        question = self.data_list.pop()
-        return question[0], question[1]
+        question: list[str] = self.data_list.pop()
+
+        # Question list is equal to three so check special tag
+        if len(question) == 3:
+            if question[2].strip() == "img":  # question is a type image
+                return question[0], question[1], "img"
+
+        return question[0], question[1], "string"
 
     def get_one_wrong_question(self):
         """Pop one question for wrong list"""
@@ -189,6 +227,57 @@ class App:
                 if row:
                     data_list.append(row)
         return data_list
+
+    def _update_image(self):
+        """Try to load the current_question as an image and update the image label."""
+        if not self.current_question or self.current_question == "No more questions!":
+            self._clear_image()
+            return
+
+        img_path = self.current_question.strip()
+
+        # If path is not absolute, try relative to this script directory
+        if not os.path.isabs(img_path):
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            candidate = os.path.join(script_dir, img_path)
+            if os.path.exists(candidate):
+                img_path = candidate
+            # else keep original (maybe the working directory has it)
+
+        if os.path.exists(img_path):
+            # Try tkinter PhotoImage first (supports PNG/GIF/PPM/PGM)
+            try:
+                new_img = PhotoImage(file=img_path)
+                print(True)
+            except tk.TclError:
+                # Fallback to PIL if available
+                if HAS_PIL:
+                    try:
+                        pil_img = Image.open(img_path)
+                        new_img = ImageTk.PhotoImage(pil_img)
+                    except Exception:
+                        new_img = None
+                else:
+                    new_img = None
+            if new_img:
+                self.image = new_img  # keep reference to avoid GC
+                self.image_label.config(image=self.image)
+                return
+            else:
+                # Failed to load with both methods
+                self._clear_image()
+                # Optionally show short message in console for debugging
+                print(f"Unable to load image: {img_path}")
+        else:
+            # File doesn't exist
+            self._clear_image()
+            print(f"Image file not found: {img_path}")
+
+    def _clear_image(self):
+        """Clear image label and release reference."""
+        # Setting to an empty PhotoImage avoids persistent image but also frees old reference
+        self.image = PhotoImage()
+        self.image_label.config(image=self.image)
 
     def run(self):
         """Run App window"""

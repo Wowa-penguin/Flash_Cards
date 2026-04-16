@@ -1,0 +1,10 @@
+Compiled vs Interpreted - GCC (Gnu Compiler Collection) is a compiled C implementation;True Being compiled / interpreted is not tied to a specific programming language, but rather to the particular implementation of the language that you use.
+The main characteristics of object-oriented programming languages are?;Abstraction, Subtypes, Inheritance, Dynamic binding.
+
+True/False Activation records | The static offset of a variable can be computed at compile time.;Correct — (True) it would not be possible to use the stack.
+True/False Activation records | The names of local variables are generally stored in activation records.;(False) The names themselves are not stored — only the memory.
+True/False Activation records | Generally, the memory for all local variables of a function is allocated in its activation record.;(False) Complicated, essentially memory for 'local variables' can also be stored on heap.
+True/False Activation records | They are only created on the run-time stack for recursive functions.;(False) Activation records are created for all function calls (or scope changes).
+For activation records, the following holds: 1: Static chain pointers are used in C/C++/Java. 2:An activation records contains memory for local variables, but not formal parameters. 3:The dynamic chain pointer is only used for implementing dynamic scoping. 4: None of the above; 4: None of the above.
+
+imgs/29.png;Test;img
